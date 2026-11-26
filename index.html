@@ -297,8 +297,8 @@ function fromHash(){const m=location.hash.match(/^#perfil\/([a-z0-9-]+)$/);if(m)
 addEventListener('hashchange',fromHash);fromHash();
 const ic=n=>`<svg class="ic" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const menu=$('#menu'),links=$('#links');
-if(menu&&links){menu.onclick=()=>{const o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o);menu.innerHTML=ic(o?'x':'menu')};
-$('#links a').forEach(a=>a.onclick=()=>{links.classList.remove('open');menu.innerHTML=ic('menu');menu.setAttribute('aria-expanded','false')})}
+menu.onclick=()=>{const o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o);menu.innerHTML=ic(o?'x':'menu')};
+$('#links a').forEach(a=>a.onclick=()=>{links.classList.remove('open');menu.innerHTML=ic('menu');menu.setAttribute('aria-expanded','false')});
 $('#yr').textContent=new Date().getFullYear();
 const tb=$('#top');addEventListener('scroll',()=>tb.classList.toggle('show',scrollY>600),{passive:true});tb.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});$$('.rv').forEach(el=>io.observe(el));
