@@ -189,7 +189,7 @@ document.getElementById('profileContent').innerHTML=`
 <section><div class="eyebrow">Conoce al creador</div><h3>Biografía</h3><p>${p.bio}</p></section>
 <div class="profile-facts"><div><small>Especialidades y técnicas</small><strong>${p.tech}</strong></div><div><small>Experiencia</small><strong>${p.years}</strong></div><div><small>Trayectoria</small><strong>${p.trajectory}</strong></div></div>
 <section><div class="eyebrow">Portafolio</div><h3>Obras y proyectos de muestra</h3><div class="profile-works"><article><div class="profile-art art-one"></div><strong>${p.works[0]}</strong></article><article><div class="profile-art art-two"></div><strong>${p.works[1]}</strong></article></div><p class="profile-disclaimer">Obras, trayectoria y datos ficticios creados exclusivamente para demostrar el funcionamiento de SAAJ.</p></section>
-<section class="profile-contact"><div><div class="eyebrow">Conecta</div><h3>Contacto y redes</h3><p>Red social de ejemplo: ${p.social}</p></div><div class="profile-share"><span class="profile-label">CONTACTO SIMULADO</span><a id="profileShareLink" class="btn" href="#" target="_blank" rel="noopener">Compartir perfil ↗</a></div></section>
+<section class="profile-contact"><div><div class="eyebrow">Conecta</div><h3>Contacto y redes</h3><p>Red social de ejemplo: ${p.social}</p></div><div class="profile-share"><span class="profile-label">CONTACTO SIMULADO</span><button id="profileShareLink" class="btn" type="button">Copiar enlace del perfil ↗</button></div></section>
 </div>`;
 modal.classList.add('open');
 }));
@@ -210,7 +210,7 @@ cards.forEach(card=>card.addEventListener('click',()=>{
     const target='#perfil/'+profileSlug(name);
     if(location.hash!==target) history.replaceState(null,'',target);
     const share=document.getElementById('profileShareLink');
-    if(share)share.href=location.href;
+    if(share){share.onclick=()=>{navigator.clipboard.writeText(location.href).then(()=>{share.textContent='Enlace copiado ✓'}).catch(()=>{share.textContent='Copia la dirección del navegador'})};}
   }
 }));
 window.addEventListener('hashchange',()=>{
