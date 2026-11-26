@@ -108,7 +108,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-of
 .profile-art{height:165px}
 .profile-works strong{display:block;padding:10px 12px;font-size:12px}
 .profile-disclaimer{font-size:11px!important;font-style:italic}
-.profile-contact{border-top:1px solid var(--line);padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.profile-share{display:flex;flex-direction:column;align-items:flex-end;gap:10px}.profile-share .btn{font-size:11px}.profile-contact{border-top:1px solid var(--line);padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
 .profile-contact p{margin:4px 0}
 @media(max-width:600px){.profile-banner,.profile-body{padding:22px 18px}.profile-identity{gap:14px}.profile-identity img{width:92px;height:92px}.profile-facts{grid-template-columns:1fr}.profile-works .profile-art{height:125px}.profile-contact{align-items:flex-start;flex-direction:column}}
 </style>
@@ -189,11 +189,11 @@ document.getElementById('profileContent').innerHTML=`
 <section><div class="eyebrow">Conoce al creador</div><h3>Biografía</h3><p>${p.bio}</p></section>
 <div class="profile-facts"><div><small>Especialidades y técnicas</small><strong>${p.tech}</strong></div><div><small>Experiencia</small><strong>${p.years}</strong></div><div><small>Trayectoria</small><strong>${p.trajectory}</strong></div></div>
 <section><div class="eyebrow">Portafolio</div><h3>Obras y proyectos de muestra</h3><div class="profile-works"><article><div class="profile-art art-one"></div><strong>${p.works[0]}</strong></article><article><div class="profile-art art-two"></div><strong>${p.works[1]}</strong></article></div><p class="profile-disclaimer">Obras, trayectoria y datos ficticios creados exclusivamente para demostrar el funcionamiento de SAAJ.</p></section>
-<section class="profile-contact"><div><div class="eyebrow">Conecta</div><h3>Contacto y redes</h3><p>Red social de ejemplo: ${p.social}</p></div><span class="profile-label">CONTACTO SIMULADO</span></section>
+<section class="profile-contact"><div><div class="eyebrow">Conecta</div><h3>Contacto y redes</h3><p>Red social de ejemplo: ${p.social}</p></div><div class="profile-share"><span class="profile-label">CONTACTO SIMULADO</span><a id="profileShareLink" class="btn" href="#" target="_blank" rel="noopener">Compartir perfil ↗</a></div></section>
 </div>`;
 modal.classList.add('open');
 }));
-function closeModal(){modal.classList.remove('open')}document.getElementById('close').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function closeModal(){modal.classList.remove('open');if(location.hash.startsWith('#perfil/'))history.replaceState(null,'',location.pathname+location.search)}document.getElementById('close').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
 
 // Perfiles individuales compartibles mediante URL: #perfil/nombre-del-artista
