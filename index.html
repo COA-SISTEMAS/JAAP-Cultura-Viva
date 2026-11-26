@@ -253,7 +253,7 @@ footer{border-top:4px solid var(--gold)}
 const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)];
 const pageSections=$('main > section[id]:not(.hero):not(#home-menu)');
 pageSections.forEach(s=>{s.classList.add('page-section');s.insertAdjacentHTML('afterbegin','<div class="wrap page-back"><a href="#inicio">← Volver a la portada</a></div>')});
-function showPage(id){if(id==='inicio'||id==='home-menu'){pageSections.forEach(s=>s.classList.remove('active'));$('#home-menu').hidden=false;window.scrollTo({top:0,behavior:'smooth'});return}
+function showPage(id){if(id==='inicio'||id==='home-menu'){pageSections.forEach(s=>s.classList.remove('active'));$('#home-menu').hidden=false;if(id==='home-menu')$('#home-menu').scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});return}
 const target=document.getElementById(id);if(!target||!target.classList.contains('page-section'))return;
 pageSections.forEach(s=>s.classList.toggle('active',s===target));target.scrollIntoView({behavior:'smooth',block:'start'});
 }
