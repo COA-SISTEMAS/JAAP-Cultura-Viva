@@ -29,6 +29,8 @@
       <div class="field"><label for="password">Contraseña</label><input id="password" type="password" autocomplete="current-password" required></div>
       <div id="loginMessage" class="message" role="status"></div>
       <button id="loginBtn" class="btn" type="submit" style="width:100%">Iniciar sesión</button>
+      <button id="forgotPasswordBtn" class="btn secondary" type="button" style="width:100%;margin-top:10px">¿Olvidaste tu contraseña?</button>
+      <div id="forgotPasswordMessage" class="message" role="status"></div>
     </form>
     <p style="font-size:11px;margin-top:18px">Si todavía no tienes una cuenta autorizada, solicita acceso a la persona responsable de SAAJ.</p>
   </section>
@@ -186,6 +188,32 @@ $('logoutBtn').addEventListener('click',async()=>{
   await supabase.auth.signOut();
   showLogin();
   clearMessage($('loginMessage'));
+});
+$('forgotPasswordBtn').addEventListener('click',async()=>{
+  const email=$('email').value.trim();
+  clearMessage($('forgotPasswordMessage'));
+  if (!email) {
+    showMessage($('forgotPasswordMessage'),'Escribe primero tu correo electrónico.','error');
+    $('email').focus();
+    return;
+  }
+  if (!$('email').checkValidity()) {
+    showMessage($('forgotPasswordMessage'),'Escribe un correo electrónico válido.','error');
+    $('email').focus();
+    return;
+  }
+  const button=$('forgotPasswordBtn');
+  button.disabled=true;
+  button.textContent='Enviando solicitud…';
+  const redirectTo=window.location.origin+window.location.pathname;
+  const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo});
+  button.disabled=false;
+  button.textContent='¿Olvidaste tu contraseña?';
+  if (error) {
+    showMessage($('forgotPasswordMessage'),'No se pudo enviar el correo: '+error.message,'error');
+    return;
+  }
+  showMessage($('forgotPasswordMessage'),'Solicitud enviada. Revisa tu correo y abre el enlace desde este mismo navegador para crear tu nueva contraseña.','success');
 });
 $('refreshBtn').addEventListener('click',loadApplications);
 $('filters').addEventListener('click',event=>{
