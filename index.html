@@ -41,11 +41,6 @@ header{position:sticky;top:0;z-index:40;background:rgba(250,247,240,.92);backdro
 .hero-card b{font:700 34px var(--serif);color:var(--g);display:block}.hero-card span{font-size:12px;color:var(--mut)}
 .ticker{background:var(--gold);color:#241a08;text-align:center;font-weight:600;font-size:12px;letter-spacing:.16em;padding:14px 10px}
 section{padding:clamp(60px,8vw,100px) 0}.alt-bg{background:var(--w)}.pale{background:var(--pale)}
-.home-menu{padding:58px 0 76px;background:var(--cream)}.home-menu-head{text-align:center;margin-bottom:28px}.home-menu-head h2{font-size:clamp(30px,4vw,42px);margin:8px 0}.home-menu-head p{color:var(--mut);font-size:14px}
-.home-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.home-card{min-height:170px;padding:23px;background:#fff;border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;align-items:flex-start;gap:7px;transition:.22s;box-shadow:0 4px 16px rgba(20,35,25,.04)}.home-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--sh)}.home-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:var(--pale);color:var(--g);font-size:22px}.home-card strong{font:600 20px var(--serif)}.home-card small{font-size:12px;color:var(--mut)}.home-arrow{margin-top:auto;padding-top:8px;color:var(--g);font-weight:700;font-size:12px}.home-card-join{background:var(--g);color:#fff}.home-card-join small,.home-card-join .home-arrow{color:#e2eee5}.home-card-join .home-icon{background:var(--gold);color:#241a08}
-.page-section{display:none}.page-section.active{display:block}.page-back{padding-top:24px}.page-back a{display:inline-flex;align-items:center;gap:8px;color:var(--g);font-size:13px;font-weight:700}.page-back a:hover{color:var(--terra)}
-@media(max-width:760px){.home-cards{grid-template-columns:repeat(2,1fr)}.home-card{min-height:158px;padding:17px}.hero .wrap{grid-template-columns:1fr}.hero-card{display:none}}
-@media(max-width:480px){.home-cards{grid-template-columns:1fr}.home-card{min-height:135px}}
 
 .head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:40px}
 .head h2{font-size:clamp(30px,4vw,48px);margin-top:8px}.head p{max-width:420px;color:var(--mut);font-size:14px}
@@ -162,23 +157,15 @@ footer{border-top:4px solid var(--gold)}
 </defs></svg>
 <div class="top">JUTICALPA, OLANCHO · HONDURAS &nbsp;/&nbsp; UN ESPACIO PARA NUESTRA CULTURA</div>
 <header><div class="wrap nav">
-<a class="brand" href="#inicio" aria-label="Volver a la portada SAAJ"><img src="logo-saaj.png" alt="SAAJ, Sociedad de Artistas y Artesanos de Juticalpa"></a>
-<a class="btn" href="#home-menu">Explorar SAAJ</a></div></header>
+<a class="brand" href="#inicio"><img src="logo-saaj.png" alt="SAAJ, Sociedad de Artistas y Artesanos de Juticalpa"></a>
+<button class="menu" id="menu" aria-label="Abrir menú" aria-expanded="false"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+<nav class="links" id="links" aria-label="Principal"><a href="#explorar">Explorar</a><a href="#talento">Rostros SAAJ</a><a href="#historia">Memoria</a><a href="#personajes">Referentes</a><a href="#agenda">Agenda</a><a href="#nosotros">Nosotros</a></nav>
+<a class="btn" href="#inscripcion">Forma parte</a></div></header>
 <main id="inicio">
-<section class="hero" style="padding-bottom:0"><div class="wrap"><div><div class="eyebrow">Arte · Comunidad · Identidad</div><h1>El talento de nuestra tierra <em>merece ser visto.</em></h1><p>Una ventana para descubrir, conectar y celebrar a los artistas y artesanos de Juticalpa, Olancho y Honduras.</p><div class="actions"><a class="btn" href="#home-menu">Explorar secciones</a></div></div>
-</div></section>
+<section class="hero" style="padding-bottom:0"><div class="wrap"><div><div class="eyebrow">Arte · Comunidad · Identidad</div><h1>El talento de nuestra tierra <em>merece ser visto.</em></h1><p>Una ventana para descubrir, conectar y celebrar a los artistas y artesanos de Juticalpa, Olancho y Honduras.</p><div class="actions"><a class="btn" href="#talento">Descubrir talento</a><a class="btn alt" href="#nosotros">Conocer SAAJ</a></div></div>
+<div class="hero-card"><div><b>23</b><span>municipios de Olancho</span></div><div><b>4</b><span>áreas creativas</span></div><div><b>1835</b><span>Juticalpa, ciudad</span></div><div><b>2</b><span>fiestas patronales</span></div></div></div></section>
 <div class="ticker">UN PUEBLO QUE CREA · UNA COMUNIDAD QUE INSPIRA · UNA CULTURA QUE PERMANECE</div>
-<section class="home-menu" id="home-menu"><div class="wrap"><div class="home-menu-head"><div class="eyebrow">Conoce nuestra comunidad</div><h2>Explora SAAJ</h2><p>Selecciona una sección para descubrirla.</p></div><div class="home-cards">
-<a class="home-card" href="#explorar"><span class="home-icon">✦</span><strong>Disciplinas artísticas</strong><small>Las expresiones que nos unen</small><span class="home-arrow">Explorar →</span></a>
-<a class="home-card" href="#talento"><span class="home-icon">◉</span><strong>Rostros SAAJ</strong><small>Artistas y artesanos de nuestra tierra</small><span class="home-arrow">Conocer →</span></a>
-<a class="home-card" href="#obras"><span class="home-icon">▧</span><strong>Galería de obras</strong><small>Creación, imaginación e identidad</small><span class="home-arrow">Ver galería →</span></a>
-<a class="home-card" href="#historia"><span class="home-icon">⌂</span><strong>Juticalpa y Olancho</strong><small>Historia, patrimonio y destinos</small><span class="home-arrow">Descubrir →</span></a>
-<a class="home-card" href="#personajes"><span class="home-icon">✧</span><strong>Referentes culturales</strong><small>Voces que dejaron huella</small><span class="home-arrow">Conocer →</span></a>
-<a class="home-card" href="#agenda"><span class="home-icon">▦</span><strong>Agenda cultural</strong><small>Encuentros y convocatorias</small><span class="home-arrow">Consultar →</span></a>
-<a class="home-card" href="#nosotros"><span class="home-icon">♡</span><strong>Nuestra razón de ser</strong><small>Quiénes somos y qué nos mueve</small><span class="home-arrow">Conocer SAAJ →</span></a>
-<a class="home-card" href="#como"><span class="home-icon">↗</span><strong>Cómo participar</strong><small>Conoce el proceso para integrarte</small><span class="home-arrow">Ver pasos →</span></a>
-<a class="home-card home-card-join" href="#inscripcion"><span class="home-icon">＋</span><strong>Forma parte de SAAJ</strong><small>Inscríbete como artista o artesano</small><span class="home-arrow">Iniciar inscripción →</span></a>
-</div></div></section>
+
 
 <section class="alt-bg" id="explorar"><div class="wrap"><div class="head rv"><div><div class="eyebrow">Un universo de expresiones</div><h2>Explora nuestras disciplinas</h2></div><p>Desde los oficios tradicionales hasta las nuevas propuestas: el arte tiene muchas formas y queremos darles espacio a todas.</p></div>
 <div class="tiles rv">
@@ -251,14 +238,6 @@ footer{border-top:4px solid var(--gold)}
 
 <script>
 const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)];
-const pageSections=$('main > section[id]:not(.hero):not(#home-menu)');
-pageSections.forEach(s=>{s.classList.add('page-section');s.insertAdjacentHTML('afterbegin','<div class="wrap page-back"><a href="#inicio">← Volver a la portada</a></div>')});
-function showPage(id){if(id==='inicio'||id==='home-menu'){pageSections.forEach(s=>s.classList.remove('active'));$('#home-menu').hidden=false;if(id==='home-menu')$('#home-menu').scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'});return}
-const target=document.getElementById(id);if(!target||!target.classList.contains('page-section'))return;
-pageSections.forEach(s=>s.classList.toggle('active',s===target));target.scrollIntoView({behavior:'smooth',block:'start'});
-}
-document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href').slice(1);if(id==='inicio'||id==='home-menu'||document.getElementById(id)?.classList.contains('page-section')){e.preventDefault();showPage(id)}});
-
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const U=i=>`https://images.unsplash.com/${i}?auto=format&fit=crop&w=900&q=80`;
 const P=[
