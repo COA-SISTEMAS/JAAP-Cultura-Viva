@@ -194,5 +194,31 @@ document.getElementById('profileContent').innerHTML=`
 modal.classList.add('open');
 }));
 function closeModal(){modal.classList.remove('open')}document.getElementById('close').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+
+// Perfiles individuales compartibles mediante URL: #perfil/nombre-del-artista
+const profileSlug = name => name.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function openProfileBySlug(slug){
+  const entry=Object.entries(demoProfiles).find(([name])=>profileSlug(name)===slug);
+  if(!entry)return;
+  const card=cards.find(item=>item.dataset.title===entry[0]);
+  if(card)card.click();
+}
+cards.forEach(card=>card.addEventListener('click',()=>{
+  const name=card.dataset.title;
+  if(demoProfiles[name]){
+    const target='#perfil/'+profileSlug(name);
+    if(location.hash!==target) history.replaceState(null,'',target);
+    const share=document.getElementById('profileShareLink');
+    if(share)share.href=location.href;
+  }
+}));
+window.addEventListener('hashchange',()=>{
+  const match=location.hash.match(/^#perfil\\/([a-z0-9-]+)$/);
+  if(match)openProfileBySlug(match[1]);
+});
+const initialProfile=location.hash.match(/^#perfil\\/([a-z0-9-]+)$/);
+if(initialProfile)openProfileBySlug(initialProfile[1]);
+
 </script>
 </body></html>
