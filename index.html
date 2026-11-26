@@ -111,6 +111,26 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-of
 .profile-share{display:flex;flex-direction:column;align-items:flex-end;gap:10px}.profile-share .btn{font-size:11px}.profile-contact{border-top:1px solid var(--line);padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
 .profile-contact p{margin:4px 0}
 @media(max-width:600px){.profile-banner,.profile-body{padding:22px 18px}.profile-identity{gap:14px}.profile-identity img{width:92px;height:92px}.profile-facts{grid-template-columns:1fr}.profile-works .profile-art{height:125px}.profile-contact{align-items:flex-start;flex-direction:column}}
+
+/* Formulario de inscripción SAAJ */
+.application-section{background:#f7f5ef;padding:65px 0}
+.application-card{max-width:760px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(20px,4vw,38px);box-shadow:0 14px 40px #202a2b0d}
+.application-card h2{font:800 clamp(28px,4vw,40px)/1.12 var(--serif);margin:8px 0}
+.application-card>p{color:var(--muted);font-size:14px}
+.application-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.application-field{display:flex;flex-direction:column;gap:6px}
+.application-field.full{grid-column:1/-1}
+.application-field label{font-size:12px;font-weight:700;color:var(--charcoal)}
+.application-field input,.application-field select,.application-field textarea{width:100%;padding:12px;border:1px solid #d9ded9;border-radius:6px;background:#fff;color:var(--ink);font:14px var(--sans)}
+.application-field textarea{min-height:115px;resize:vertical}
+.application-help{font-size:11px;color:var(--muted)}
+.application-consent{display:flex;align-items:flex-start;gap:9px;font-size:11px;color:var(--muted);margin:16px 0}
+.application-consent input{margin-top:3px}
+.application-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.application-status{font-size:13px;font-weight:600;min-height:22px}
+.application-status.success{color:#087b27}.application-status.error{color:#b42318}
+@media(max-width:600px){.application-grid{grid-template-columns:1fr}.application-field.full{grid-column:auto}.application-card{padding:20px}}
+
 </style>
 </head>
 <body>
@@ -162,7 +182,25 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-of
 <p class="people-note">Esta galería es una selección inicial de referentes culturales nacidos en Juticalpa. Queremos ampliarla con artistas, artesanas, músicos y creadores de todos los municipios de Olancho.</p></div></section>
 <section class="section events" id="agenda"><div class="wrap"><div class="head"><div><div class="eyebrow">Lo que sucede</div><h2>Agenda cultural</h2></div><p>Exposiciones, encuentros, talleres y convocatorias. Este espacio reunirá las actividades de nuestra comunidad.</p></div><div class="event-grid"><article class="event"><div class="event-icon">✳</div><div><small>Convocatorias</small><h3>Comparte tu actividad cultural</h3><p>Artistas y gestores podrán enviar información de sus próximos eventos para integrarlos a la agenda SAAJ.</p></div></article><article class="event"><div class="event-icon">♫</div><div><small>Comunidad</small><h3>Directorio en construcción</h3><p>Estamos preparando los primeros perfiles para dar a conocer el talento de Juticalpa y Olancho.</p></div></article></div></div></section>
 <section class="section" id="nosotros"><div class="wrap about"><div class="about-photo" role="img" aria-label="Espacio creativo y artístico"></div><div><div class="eyebrow">Nuestra razón de ser</div><h2>La cultura también se construye cuando nos encontramos.</h2><p>SAAJ, la Sociedad de Artistas y Artesanos de Juticalpa, impulsa un espacio de encuentro, reconocimiento y proyección para las personas que crean, producen y mantienen viva la cultura.</p><p>Este portal nace para acercar ese talento a la comunidad, abrir oportunidades de colaboración y compartir la riqueza creativa de nuestra región con Honduras y el mundo.</p><div class="values"><div class="value"><strong>Visibilidad</strong><span>Dar lugar a cada voz creativa.</span></div><div class="value"><strong>Identidad</strong><span>Compartir lo que somos.</span></div><div class="value"><strong>Conexión</strong><span>Crear puentes y oportunidades.</span></div><div class="value"><strong>Memoria</strong><span>Documentar nuestro patrimonio vivo.</span></div></div></div></div></section>
-<section class="join" id="participa"><div class="wrap join-inner"><div><div class="eyebrow">Este espacio también es tuyo</div><h2>Tu talento tiene un lugar aquí.</h2><p>¿Eres artista, artesano, creador o gestor cultural? Queremos conocer tu trabajo y ayudarte a compartirlo. Escríbenos para iniciar tu perfil o proponer una actividad.</p></div><a class="btn" href="mailto:CONTACTO-SAAJ@ejemplo.com?subject=Quiero%20formar%20parte%20de%20SAAJ">Quiero participar ↗</a></div></section>
+
+<section class="application-section" id="inscripcion"><div class="wrap"><div class="application-card">
+<div class="eyebrow">Forma parte de SAAJ</div><h2>Inscripción de artistas y artesanos</h2>
+<p>Comparte tus datos y una breve presentación de tu trabajo. La directiva revisará tu solicitud antes de publicar tu perfil en el directorio.</p>
+<form id="artistApplicationForm">
+<div class="application-grid">
+<div class="application-field"><label for="appFullName">Nombre completo *</label><input id="appFullName" name="full_name" autocomplete="name" maxlength="160" required></div>
+<div class="application-field"><label for="appEmail">Correo electrónico *</label><input id="appEmail" name="email" type="email" autocomplete="email" maxlength="254" required></div>
+<div class="application-field"><label for="appPhone">Teléfono o WhatsApp</label><input id="appPhone" name="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+<div class="application-field"><label for="appMunicipality">Municipio</label><input id="appMunicipality" name="municipality" maxlength="120" placeholder="Ej. Juticalpa"></div>
+<div class="application-field full"><label for="appDiscipline">Disciplina artística o artesanal *</label><select id="appDiscipline" name="discipline" required><option value="">Selecciona una disciplina</option><option>Artes visuales y pintura</option><option>Artesanía y oficios</option><option>Música y canto</option><option>Teatro y danza</option><option>Literatura y escritura</option><option>Fotografía y audiovisual</option><option>Diseño y arte digital</option><option>Otra expresión cultural</option></select></div>
+<div class="application-field full"><label for="appBio">Cuéntanos sobre tu trabajo</label><textarea id="appBio" name="biography" maxlength="5000" placeholder="Tu experiencia, técnicas, trayectoria o aquello que te gustaría compartir..."></textarea><span class="application-help">Máximo 5,000 caracteres.</span></div>
+<div class="application-field full"><label for="appPortfolio">Enlace a portafolio o redes (opcional)</label><input id="appPortfolio" name="portfolio_url" type="url" maxlength="500" placeholder="https://"></div>
+</div>
+<label class="application-consent"><input id="appConsent" type="checkbox" required><span>Confirmo que los datos proporcionados son correctos y autorizo a SAAJ a contactarme para dar seguimiento a esta solicitud. El envío no garantiza la publicación del perfil.</span></label>
+<div class="application-actions"><button class="btn" id="applicationSubmit" type="submit">Enviar solicitud ↗</button><span class="application-help">Los campos con * son obligatorios.</span></div>
+<p id="applicationStatus" class="application-status" role="status" aria-live="polite"></p>
+</form></div></div></section>
+<section class="join" id="participa"><div class="wrap join-inner"><div><div class="eyebrow">Este espacio también es tuyo</div><h2>Tu talento tiene un lugar aquí.</h2><p>¿Eres artista, artesano, creador o gestor cultural? Queremos conocer tu trabajo y ayudarte a compartirlo. Escríbenos para iniciar tu perfil o proponer una actividad.</p></div><a class="btn" href="#inscripcion">Iniciar inscripción ↗</a></div></section>
 </main>
 <footer class="footer"><div class="wrap"><div class="foot-top"><div><a class="brand" href="#inicio"><img class="brand-logo footer-logo" src="logo-saaj.png" alt="SAAJ, Sociedad de Artistas y Artesanos de Juticalpa"></a><p>Una ventana al talento artístico, artesanal y cultural de Juticalpa, Olancho y Honduras.</p></div><div class="foot-links"><a href="#explorar">Explorar</a><a href="#talento">Talento local</a><a href="#agenda">Agenda</a><a href="#nosotros">Nosotros</a><a href="#participa">Participar</a></div></div><div class="copy"><span>© <span id="year"></span> SAAJ · Sociedad de Artistas y Artesanos de Juticalpa</span><span>El arte nos representa. La cultura nos une.</span></div></div></footer>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="profile-modal"><button class="close" id="close" aria-label="Cerrar">×</button><div id="profileContent"></div></div></div>
@@ -220,5 +258,48 @@ window.addEventListener('hashchange',()=>{
 const initialProfile=location.hash.match(/^#perfil\\/([a-z0-9-]+)$/);
 if(initialProfile)openProfileBySlug(initialProfile[1]);
 
+</script>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const SAAJ_SUPABASE_URL = 'https://jenrlquzzwzkmnpzgknl.supabase.co';
+const SAAJ_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8KHQHSRHh6F9U4DDloSRWg_0eWIJcQr';
+const saajClient = createClient(SAAJ_SUPABASE_URL, SAAJ_SUPABASE_PUBLISHABLE_KEY);
+const applicationForm = document.getElementById('artistApplicationForm');
+if (applicationForm) {
+  applicationForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const submit = document.getElementById('applicationSubmit');
+    const status = document.getElementById('applicationStatus');
+    const formData = new FormData(applicationForm);
+    const record = {
+      full_name: String(formData.get('full_name') || '').trim(),
+      email: String(formData.get('email') || '').trim(),
+      phone: String(formData.get('phone') || '').trim() || null,
+      municipality: String(formData.get('municipality') || '').trim() || null,
+      discipline: String(formData.get('discipline') || '').trim(),
+      biography: String(formData.get('biography') || '').trim() || null,
+      portfolio_url: String(formData.get('portfolio_url') || '').trim() || null
+    };
+    status.textContent = '';
+    status.className = 'application-status';
+    submit.disabled = true;
+    submit.textContent = 'Enviando...';
+    try {
+      const { error } = await saajClient.from('artist_applications').insert(record);
+      if (error) throw error;
+      applicationForm.reset();
+      status.textContent = '¡Solicitud enviada! La directiva de SAAJ revisará tus datos y podrá contactarte.';
+      status.classList.add('success');
+    } catch (error) {
+      console.error('SAAJ application submission:', error);
+      status.textContent = 'No pudimos enviar tu solicitud. Revisa tu conexión e inténtalo nuevamente.';
+      status.classList.add('error');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Enviar solicitud ↗';
+    }
+  });
+}
 </script>
 </body></html>
