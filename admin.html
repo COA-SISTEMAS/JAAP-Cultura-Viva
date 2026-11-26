@@ -33,6 +33,18 @@
     <p style="font-size:11px;margin-top:18px">Si todavía no tienes una cuenta autorizada, solicita acceso a la persona responsable de SAAJ.</p>
   </section>
 
+  <section id="recoveryView" class="panel login-wrap hidden">
+    <div class="eyebrow">Seguridad de la cuenta</div>
+    <h1>Crear nueva contraseña</h1>
+    <p>Estás recuperando el acceso al panel privado de SAAJ. Escribe una contraseña nueva y confírmala.</p>
+    <form id="recoveryForm">
+      <div class="field"><label for="newPassword">Nueva contraseña</label><input id="newPassword" type="password" autocomplete="new-password" minlength="8" required></div>
+      <div class="field"><label for="confirmPassword">Confirmar contraseña</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></div>
+      <div id="recoveryMessage" class="message" role="status"></div>
+      <button id="recoveryBtn" class="btn" type="submit" style="width:100%">Guardar nueva contraseña</button>
+    </form>
+  </section>
+
   <section id="dashboardView" class="hidden">
     <div class="heading"><div><div class="eyebrow">Gestión de miembros</div><h1>Solicitudes de inscripción</h1><p>Revisa la información enviada por artistas y artesanos.</p></div><button id="refreshBtn" class="btn secondary" type="button">Actualizar lista</button></div>
     <div class="panel">
@@ -72,12 +84,21 @@ function dateLabel(value) {
 }
 function showLogin() {
   $('loginView').classList.remove('hidden');
+  $('recoveryView').classList.add('hidden');
   $('dashboardView').classList.add('hidden');
   $('logoutBtn').classList.add('hidden');
   $('userLabel').textContent='';
 }
+function showRecovery() {
+  $('loginView').classList.add('hidden');
+  $('dashboardView').classList.add('hidden');
+  $('recoveryView').classList.remove('hidden');
+  $('logoutBtn').classList.add('hidden');
+  $('userLabel').textContent='Recuperación de contraseña';
+}
 function showDashboard(email) {
   $('loginView').classList.add('hidden');
+  $('recoveryView').classList.add('hidden');
   $('dashboardView').classList.remove('hidden');
   $('logoutBtn').classList.remove('hidden');
   $('userLabel').textContent=email || 'Sesión activa';
@@ -180,11 +201,41 @@ $('applications').addEventListener('click',event=>{
   const nextStatus=button.dataset.action;
   changeStatus(button.dataset.id,nextStatus);
 });
-supabase.auth.onAuthStateChange((_event,session)=>{
-  if (!session) showLogin();
+supabase.auth.onAuthStateChange((event,session)=>{
+  if (event === 'PASSWORD_RECOVERY') showRecovery();
+  else if (!session) showLogin();
+});
+$('recoveryForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  clearMessage($('recoveryMessage'));
+  const password=$('newPassword').value;
+  const confirmation=$('confirmPassword').value;
+  if (password.length < 8) {
+    showMessage($('recoveryMessage'),'La contraseña debe tener al menos 8 caracteres.','error');
+    return;
+  }
+  if (password !== confirmation) {
+    showMessage($('recoveryMessage'),'Las contraseñas no coinciden.','error');
+    return;
+  }
+  $('recoveryBtn').disabled=true;
+  $('recoveryBtn').textContent='Guardando…';
+  const {error}=await supabase.auth.updateUser({password});
+  $('recoveryBtn').disabled=false;
+  $('recoveryBtn').textContent='Guardar nueva contraseña';
+  if (error) {
+    showMessage($('recoveryMessage'),'No se pudo actualizar la contraseña: '+error.message,'error');
+    return;
+  }
+  await supabase.auth.signOut();
+  $('recoveryForm').reset();
+  showLogin();
+  showMessage($('loginMessage'),'Contraseña actualizada. Ya puedes iniciar sesión con tu nueva contraseña.','success');
 });
 const {data:{session}}=await supabase.auth.getSession();
-if (session) await authorizeSession(session);
+const recoveryLink = new URLSearchParams(window.location.hash.slice(1)).get('type') === 'recovery';
+if (recoveryLink) showRecovery();
+else if (session) await authorizeSession(session);
 else showLogin();
 </script>
 </body>
