@@ -87,6 +87,30 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-of
 .photo:after{content:'PERFIL FICTICIO · MUESTRA'}
 @media(max-width:900px){.artworks-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.artworks-grid{grid-template-columns:1fr 1fr;gap:10px}.artwork-image{height:175px}.artwork-info{padding:10px}.artwork-info h3{font-size:15px}}
+
+.profile-modal{background:#fff;width:min(900px,100%);max-height:90vh;overflow:auto;position:relative;border-radius:12px}
+.profile-modal .close{position:sticky;float:right;top:10px;right:12px;z-index:3;background:#fff;border-radius:50%;width:38px;height:38px;box-shadow:0 2px 12px #0002}
+.profile-banner{background:var(--charcoal);color:#fff;padding:28px 30px 25px}
+.profile-label{display:inline-block;background:var(--yellow);color:var(--charcoal);font-size:9px;font-weight:900;letter-spacing:.1em;padding:6px 9px;border-radius:3px}
+.profile-identity{display:flex;align-items:center;gap:22px;margin-top:18px}
+.profile-identity img{width:132px;height:132px;border-radius:8px;object-fit:cover;border:4px solid #fff}
+.profile-identity h2{font:800 clamp(26px,4vw,38px) var(--serif);margin:5px 0;color:#fff}
+.profile-identity p{margin:0;color:#eee}
+.profile-body{padding:28px 30px 32px;display:grid;gap:25px}
+.profile-body h3{font:800 22px var(--serif);margin:5px 0}
+.profile-body p{color:var(--muted);font-size:14px}
+.profile-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.profile-facts div{background:#f5f5f2;padding:14px;border-top:3px solid var(--gold);border-radius:5px}
+.profile-facts small{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}
+.profile-facts strong{font-size:12px;line-height:1.5}
+.profile-works{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.profile-works article{border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.profile-art{height:165px}
+.profile-works strong{display:block;padding:10px 12px;font-size:12px}
+.profile-disclaimer{font-size:11px!important;font-style:italic}
+.profile-contact{border-top:1px solid var(--line);padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.profile-contact p{margin:4px 0}
+@media(max-width:600px){.profile-banner,.profile-body{padding:22px 18px}.profile-identity{gap:14px}.profile-identity img{width:92px;height:92px}.profile-facts{grid-template-columns:1fr}.profile-works .profile-art{height:125px}.profile-contact{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -141,12 +165,34 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-of
 <section class="join" id="participa"><div class="wrap join-inner"><div><div class="eyebrow">Este espacio también es tuyo</div><h2>Tu talento tiene un lugar aquí.</h2><p>¿Eres artista, artesano, creador o gestor cultural? Queremos conocer tu trabajo y ayudarte a compartirlo. Escríbenos para iniciar tu perfil o proponer una actividad.</p></div><a class="btn" href="mailto:CONTACTO-SAAJ@ejemplo.com?subject=Quiero%20formar%20parte%20de%20SAAJ">Quiero participar ↗</a></div></section>
 </main>
 <footer class="footer"><div class="wrap"><div class="foot-top"><div><a class="brand" href="#inicio"><img class="brand-logo footer-logo" src="logo-saaj.png" alt="SAAJ, Sociedad de Artistas y Artesanos de Juticalpa"></a><p>Una ventana al talento artístico, artesanal y cultural de Juticalpa, Olancho y Honduras.</p></div><div class="foot-links"><a href="#explorar">Explorar</a><a href="#talento">Talento local</a><a href="#agenda">Agenda</a><a href="#nosotros">Nosotros</a><a href="#participa">Participar</a></div></div><div class="copy"><span>© <span id="year"></span> SAAJ · Sociedad de Artistas y Artesanos de Juticalpa</span><span>El arte nos representa. La cultura nos une.</span></div></div></footer>
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-box"><button class="close" id="close" aria-label="Cerrar">×</button><div class="eyebrow" id="modalTag">SAAJ · CULTURA VIVA</div><h3 id="modalTitle">Disciplina</h3><p id="modalText"></p><a class="btn" href="#participa">Quiero participar ↗</a></div></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="profile-modal"><button class="close" id="close" aria-label="Cerrar">×</button><div id="profileContent"></div></div></div>
 <script>
 const menu=document.getElementById('menu'),links=document.getElementById('links');menu.addEventListener('click',()=>{const open=links.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'×':'☰'});links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));document.getElementById('year').textContent=new Date().getFullYear();
 let selected='Todos';const cards=[...document.querySelectorAll('.card')],search=document.getElementById('search');
 function filterCards(){const q=search.value.trim().toLocaleLowerCase('es');let n=0;cards.forEach(c=>{const match=(selected==='Todos'||c.dataset.category===selected)&&(c.dataset.title+' '+c.dataset.category+' '+c.dataset.description).toLocaleLowerCase('es').includes(q);c.hidden=!match;if(match)n++});let empty=document.querySelector('.empty');if(!n&&!empty){empty=document.createElement('div');empty.className='empty';empty.textContent='No encontramos resultados. Prueba con otra búsqueda.';document.getElementById('cards').append(empty)}else if(n&&empty)empty.remove()}
 search.addEventListener('input',filterCards);document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');selected=b.dataset.filter;filterCards()}));document.querySelectorAll('[data-cat]').forEach(a=>a.addEventListener('click',()=>{const b=[...document.querySelectorAll('.filter')].find(x=>x.dataset.filter===a.dataset.cat);if(b)b.click()}));
-const modal=document.getElementById('modal');cards.forEach(c=>c.addEventListener('click',()=>{document.getElementById('modalTag').textContent=c.dataset.category;document.getElementById('modalTitle').textContent=c.dataset.title;document.getElementById('modalText').textContent=c.dataset.description;modal.classList.add('open')}));function closeModal(){modal.classList.remove('open')}document.getElementById('close').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+const modal=document.getElementById('modal');
+const demoProfiles={
+"Elena Maravilla":{discipline:"Artista visual · Pintura",place:"Juticalpa, Olancho",bio:"Artista ficticia cuya obra explora los paisajes, colores y memorias de Olancho. En esta biografía de muestra trabaja con escenas de la vida cotidiana y composiciones inspiradas en la naturaleza.",tech:"Acrílico · Óleo · Paisajismo · Arte contemporáneo",years:"8 años (dato ficticio)",trajectory:"Exposiciones colectivas imaginarias y participación en encuentros culturales de muestra.",works:["Atardecer en Olancho","Colores de mi tierra"],social:"@elenamaravilla.demo",photo:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85"},
+"Mateo Rivera":{discipline:"Artesano · Cerámica y fibras",place:"Catacamas, Olancho",bio:"Artesano ficticio que transforma barro y fibras naturales en piezas decorativas. Su perfil representa a creadores que mantienen vivos los oficios manuales y exploran nuevas formas de diseño.",tech:"Modelado en barro · Cerámica · Fibras naturales",years:"12 años (dato ficticio)",trajectory:"Muestras artesanales y talleres comunitarios imaginarios.",works:["Formas de mi tierra","Raíces y texturas"],social:"@mateorivera.demo",photo:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=85"},
+"Lucía del Valle":{discipline:"Música y escena · Canto",place:"Juticalpa, Olancho",bio:"Cantautora ficticia que combina ritmos hondureños con sonidos contemporáneos. Este perfil de ejemplo muestra cómo se presentará la trayectoria de intérpretes y músicos.",tech:"Canto · Composición · Música acústica",years:"6 años (dato ficticio)",trajectory:"Presentaciones culturales y conciertos de muestra imaginarios.",works:["Voces del valle","Canción para mi tierra"],social:"@luciadelvalle.demo",photo:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=85"},
+"Andrés Cálix":{discipline:"Artes visuales · Fotografía",place:"San Francisco de la Paz, Olancho",bio:"Fotógrafo ficticio interesado en retratar la naturaleza, los oficios y las tradiciones de Olancho. Su trabajo imaginario combina fotografía documental y paisaje.",tech:"Fotografía documental · Retrato · Paisaje",years:"5 años (dato ficticio)",trajectory:"Proyectos fotográficos y exposiciones imaginarias sobre identidad local.",works:["Rostros de mi pueblo","Caminos de Olancho"],social:"@andrescalix.demo",photo:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85"},
+"Sofía Membreño":{discipline:"Letras y otros · Escritura",place:"Manto, Olancho",bio:"Escritora ficticia que crea relatos y poemas inspirados en la memoria oral, los caminos y las voces de su comunidad. Perfil creado únicamente para mostrar la sección literaria.",tech:"Poesía · Relato breve · Escritura creativa",years:"4 años (dato ficticio)",trajectory:"Lecturas públicas y publicaciones literarias imaginarias.",works:["Voces del camino","Pequeñas memorias"],social:"@sofiamembreno.demo",photo:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=85"},
+"Gabriel Fúnez":{discipline:"Música y escena · Teatro y danza",place:"Juticalpa, Olancho",bio:"Actor y bailarín ficticio que explora el teatro comunitario, la danza y las expresiones escénicas populares. Su ficha muestra cómo se presentarán los perfiles de artistas escénicos.",tech:"Teatro · Danza · Expresión corporal",years:"7 años (dato ficticio)",trajectory:"Montajes escénicos y festivales comunitarios imaginarios.",works:["Cuerpos que cuentan","Escena de mi tierra"],social:"@gabrielfunez.demo",photo:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=85"}
+};
+cards.forEach(c=>c.addEventListener('click',()=>{
+const p=demoProfiles[c.dataset.title];
+if(!p){return}
+document.getElementById('profileContent').innerHTML=`
+<div class="profile-banner"><span class="profile-label">PERFIL FICTICIO · DEMOSTRACIÓN</span><div class="profile-identity"><img src="${p.photo}" alt="Retrato ilustrativo de ${c.dataset.title}"><div><span class="tag">${p.discipline}</span><h2 id="modalTitle">${c.dataset.title}</h2><p>${p.place}</p></div></div></div>
+<div class="profile-body">
+<section><div class="eyebrow">Conoce al creador</div><h3>Biografía</h3><p>${p.bio}</p></section>
+<div class="profile-facts"><div><small>Especialidades y técnicas</small><strong>${p.tech}</strong></div><div><small>Experiencia</small><strong>${p.years}</strong></div><div><small>Trayectoria</small><strong>${p.trajectory}</strong></div></div>
+<section><div class="eyebrow">Portafolio</div><h3>Obras y proyectos de muestra</h3><div class="profile-works"><article><div class="profile-art art-one"></div><strong>${p.works[0]}</strong></article><article><div class="profile-art art-two"></div><strong>${p.works[1]}</strong></article></div><p class="profile-disclaimer">Obras, trayectoria y datos ficticios creados exclusivamente para demostrar el funcionamiento de SAAJ.</p></section>
+<section class="profile-contact"><div><div class="eyebrow">Conecta</div><h3>Contacto y redes</h3><p>Red social de ejemplo: ${p.social}</p></div><span class="profile-label">CONTACTO SIMULADO</span></section>
+</div>`;
+modal.classList.add('open');
+}));
+function closeModal(){modal.classList.remove('open')}document.getElementById('close').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 </script>
 </body></html>
